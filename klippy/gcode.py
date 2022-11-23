@@ -268,6 +268,13 @@ class GCodeDispatch:
                 not gcmd.get_float('S', 1.) or self.is_fileinput)):
             # Don't warn about requests to turn off fan when fan not present
             return
+        elif cmd.startswith("CRASH_TEST"):
+            # Crashing Klipper
+            logging.info("Crashing Klipper")
+            varA = 10
+            varB = 0
+            varC = varA / varB
+            return varC
         gcmd.respond_info('Unknown command:"%s"' % (cmd,))
     def _cmd_mux(self, gcmd):
         key, values = self.mux_commands[gcmd.get_command()]
