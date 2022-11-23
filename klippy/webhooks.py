@@ -334,6 +334,8 @@ class GCodeHelper:
         wh.register_endpoint("gcode/restart", self._handle_restart)
         wh.register_endpoint("gcode/firmware_restart",
                              self._handle_firmware_restart)
+        wh.register_endpoint("gcode/crash_test",
+                             self._handle_crash_test)
         wh.register_endpoint("gcode/subscribe_output",
                              self._handle_subscribe_output)
     def _handle_help(self, web_request):
@@ -344,6 +346,12 @@ class GCodeHelper:
         self.gcode.run_script('restart')
     def _handle_firmware_restart(self, web_request):
         self.gcode.run_script('firmware_restart')
+    def _handle_crash_test(self, web_request):
+        msg = "Launching Klipper Crash test"
+        logging.info(msg)
+        varA = 10
+        varB = 0
+        varC = varA / varB
     def _output_callback(self, msg):
         for cconn, template in list(self.clients.items()):
             if cconn.is_closed():
